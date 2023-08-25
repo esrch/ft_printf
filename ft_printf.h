@@ -83,7 +83,7 @@ ssize_t				print_x(va_list args, t_specifier *specifier, int *len);
 ssize_t				print_p(va_list args, t_specifier *specifier, int *len);
 
 // Print utils
-ssize_t				write_count(int fd, void *buf, size_t nbyte, int *len);
+ssize_t				ft_write_count(int fd, void *buf, size_t nbyte, int *len);
 ssize_t				print_spaces(size_t n, int *len);
 ssize_t				print_zeros(size_t n, int *len);
 ssize_t				print_sign(int sign, t_sign sign_char, int *len);

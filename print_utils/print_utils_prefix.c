@@ -15,17 +15,17 @@
 ssize_t	print_sign(int sign, t_sign sign_char, int *len)
 {
 	if (sign < 0)
-		return (write_count(1, "-", 1, len));
+		return (ft_write_count(1, "-", 1, len));
 	if (sign >= 0 && sign_char == SIGN_PLUS)
-		return (write_count(1, "+", 1, len));
+		return (ft_write_count(1, "+", 1, len));
 	if (sign >= 0 && sign_char == SIGN_SPACE)
-		return (write_count(1, " ", 1, len));
+		return (ft_write_count(1, " ", 1, len));
 	return (0);
 }
 
 ssize_t	print_hex_prefix(int is_upper, int *len)
 {
 	if (is_upper)
-		return (write_count(1, "0X", 2, len));
-	return (write_count(1, "0x", 2, len));
+		return (ft_write_count(1, "0X", 2, len));
+	return (ft_write_count(1, "0x", 2, len));
 }

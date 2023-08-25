@@ -57,7 +57,7 @@ ssize_t	print_digits(long long value, size_t digit_count, int *len)
 		buffer[i] = "0123456789"[-(value % 10)];
 		value /= 10;
 	}
-	return (write_count(1, buffer, digit_count, len));
+	return (ft_write_count(1, buffer, digit_count, len));
 }
 
 ssize_t	uprint_digits(unsigned long long value, size_t digit_count, int *len)
@@ -73,7 +73,7 @@ ssize_t	uprint_digits(unsigned long long value, size_t digit_count, int *len)
 		buffer[i] = "0123456789"[value % 10];
 		value /= 10;
 	}
-	return (write_count(1, buffer, digit_count, len));
+	return (ft_write_count(1, buffer, digit_count, len));
 }
 
 ssize_t	uprint_hex_digits(unsigned long long value, size_t digit_count,
@@ -95,5 +95,5 @@ ssize_t	uprint_hex_digits(unsigned long long value, size_t digit_count,
 		buffer[i] = digits[value % 16];
 		value /= 16;
 	}
-	return (write_count(1, buffer, digit_count, len));
+	return (ft_write_count(1, buffer, digit_count, len));
 }

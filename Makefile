@@ -15,6 +15,8 @@ all: $(NAME)
 $(NAME): $(OBJS) ft_printf.h
 	$(AR) $(ARFLAGS) $(NAME) $(OBJS)
 
+bonus: $(NAME)
+
 clean:
 	$(RM) -f $(OBJS)
 
@@ -23,4 +25,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re

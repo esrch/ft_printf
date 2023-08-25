@@ -19,7 +19,7 @@ ssize_t	print_c(va_list args, t_specifier *specifier, int *len)
 	c = va_arg(args, int);
 	if (print_left_padding(1, PADDING_SPACE, specifier, len) < 0)
 		return (-1);
-	if (write_count(1, &c, 1, len) < 0)
+	if (ft_write_count(1, &c, 1, len) < 0)
 		return (-1);
 	if (print_right_padding(1, PADDING_SPACE, specifier, len) < 0)
 		return (-1);
@@ -32,16 +32,25 @@ ssize_t	print_s(va_list args, t_specifier *specifier, int *len)
 	size_t	char_count;
 
 	str = va_arg(args, char *);
-	if (specifier->precision >= 0)
+	if (str == NULL && specifier->precision >= 0 && specifier->precision < 6)
+		char_count = 0;
+	else if (str == NULL)
+		char_count = 6;
+	else if (specifier->precision >= 0)
 		char_count = ft_strlen_max(str, specifier->precision);
 	else
 		char_count = ft_strlen(str);
 	if (print_left_padding(char_count, PADDING_SPACE, specifier, len) < 0)
 		return (-1);
-	if (char_count > 0)
-		if (write_count(1, str, char_count, len) < 0)
+	if (str == NULL && (specifier->precision < 0 || specifier->precision >= 6))
+	{
+		if (ft_write_count(1, "(null)", 6, len) < 0)
 			return (-1);
-	if (print_right_padding(char_count, PADDING_SPACE, specifier, len) < 0)
-		return (-1);
-	return (0);
+	}
+	else if (char_count > 0)
+	{
+		if (ft_write_count(1, str, char_count, len) < 0)
+			return (-1);
+	}
+	return (print_right_padding(char_count, PADDING_SPACE, specifier, len));
 }

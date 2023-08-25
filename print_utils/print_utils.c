@@ -12,7 +12,7 @@
 
 #include "../ft_printf.h"
 
-ssize_t	write_count(int fd, void *buf, size_t nbyte, int *len)
+ssize_t	ft_write_count(int fd, void *buf, size_t nbyte, int *len)
 {
 	ssize_t	result;
 
@@ -30,13 +30,13 @@ static ssize_t	print_mult_chars(char *c_50x, size_t n, int *len)
 {
 	while (n > 50)
 	{
-		if (write_count(1, c_50x, 50, len) < 0)
+		if (ft_write_count(1, c_50x, 50, len) < 0)
 			return (-1);
 		n -= 50;
 	}
 	if (!n)
 		return (n);
-	return (write_count(1, c_50x, n, len));
+	return (ft_write_count(1, c_50x, n, len));
 }
 
 ssize_t	print_spaces(size_t n, int *len)

@@ -15,7 +15,7 @@
 ssize_t	print_special(t_specifier *specifier, va_list args, int *len)
 {
 	if (specifier->conversion == CONVERT_PERCENT)
-		return (write_count(1, "%", 1, len));
+		return (ft_write_count(1, "%", 1, len));
 	if (specifier->conversion == CONVERT_CHAR)
 		return (print_c(args, specifier, len));
 	if (specifier->conversion == CONVERT_STRING)
@@ -29,5 +29,5 @@ ssize_t	print_special(t_specifier *specifier, va_list args, int *len)
 		return (print_x(args, specifier, len));
 	if (specifier->conversion == CONVERT_POINTER)
 		return (print_p(args, specifier, len));
-	return (write_count(1, "?", 1, len));
+	return (ft_write_count(1, "?", 1, len));
 }
