@@ -30,7 +30,7 @@ static size_t	handle_normal(char *format, int *len)
 	i = 1;
 	while (format[i] && format[i] != '%')
 		i++;
-	(void)ft_write_count(1, format, i, len);
+	ft_write_count(1, format, i, len);
 	return (i);
 }
 
@@ -41,9 +41,9 @@ size_t	handle_special(char *format, va_list args, int *len)
 	init_specifier(&specifier);
 	parse_specifier(format, args, &specifier);
 	if (specifier.conversion == CONVERT_INVALID)
-		(void)ft_write_count(1, format, 1, len);
+		ft_write_count(1, format, 1, len);
 	else
-		(void)print_special(&specifier, args, len);
+		print_special(&specifier, args, len);
 	return (specifier.format_len);
 }
 

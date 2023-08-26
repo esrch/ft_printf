@@ -12,43 +12,46 @@
 
 #include "../ft_printf.h"
 
-ssize_t	ft_write_count(int fd, void *buf, size_t nbyte, int *len)
+void	ft_write_count(int fd, void *buf, size_t nbyte, int *len)
 {
 	ssize_t	result;
 
 	if (*len < 0)
-		return (*len);
+		return ;
 	result = write(fd, buf, nbyte);
 	if (result < 0)
 		*len = result;
 	else
 		*len += result;
-	return (result);
 }
 
-static ssize_t	print_mult_chars(char *c_50x, size_t n, int *len)
+static void	print_mult_chars(char *c_50x, size_t n, int *len)
 {
+	if (*len < 0)
+		return ;
 	while (n > 50)
 	{
-		if (ft_write_count(1, c_50x, 50, len) < 0)
-			return (-1);
+		ft_write_count(1, c_50x, 50, len);
+		if (*len < 0)
+			return ;
 		n -= 50;
 	}
-	if (!n)
-		return (n);
-	return (ft_write_count(1, c_50x, n, len));
+	if (n)
+		ft_write_count(1, c_50x, n, len);
 }
 
-ssize_t	print_spaces(size_t n, int *len)
+void	print_spaces(size_t n, int *len)
 {
 	static char	*spaces = "                                                  ";
 
-	return (print_mult_chars(spaces, n, len));
+	if (*len >= 0)
+		print_mult_chars(spaces, n, len);
 }
 
-ssize_t	print_zeros(size_t n, int *len)
+void	print_zeros(size_t n, int *len)
 {
 	static char	*zeros = "00000000000000000000000000000000000000000000000000";
 
-	return (print_mult_chars(zeros, n, len));
+	if (*len >= 0)
+		print_mult_chars(zeros, n, len);
 }

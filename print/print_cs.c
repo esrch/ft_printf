@@ -12,45 +12,38 @@
 
 #include "../ft_printf.h"
 
-ssize_t	print_c(va_list args, t_specifier *specifier, int *len)
+void	print_c(va_list args, t_specifier *specifier, int *len)
 {
 	unsigned char	c;
 
 	c = va_arg(args, int);
-	if (print_left_padding(1, PADDING_SPACE, specifier, len) < 0)
-		return (-1);
-	if (ft_write_count(1, &c, 1, len) < 0)
-		return (-1);
-	if (print_right_padding(1, PADDING_SPACE, specifier, len) < 0)
-		return (-1);
-	return (0);
+	print_left_padding(1, PADDING_SPACE, specifier, len);
+	ft_write_count(1, &c, 1, len);
+	print_right_padding(1, PADDING_SPACE, specifier, len);
 }
 
-ssize_t	print_s(va_list args, t_specifier *specifier, int *len)
+static size_t	count_chars_s(char *str, t_specifier *specifier)
+{
+	if (str == NULL && specifier->precision >= 0 && specifier->precision < 6)
+		return (0);
+	else if (str == NULL)
+		return (6);
+	else if (specifier->precision >= 0)
+		return (ft_strlen_max(str, specifier->precision));
+	return (ft_strlen(str));
+}
+
+void	print_s(va_list args, t_specifier *specifier, int *len)
 {
 	char	*str;
 	size_t	char_count;
 
 	str = va_arg(args, char *);
-	if (str == NULL && specifier->precision >= 0 && specifier->precision < 6)
-		char_count = 0;
-	else if (str == NULL)
-		char_count = 6;
-	else if (specifier->precision >= 0)
-		char_count = ft_strlen_max(str, specifier->precision);
-	else
-		char_count = ft_strlen(str);
-	if (print_left_padding(char_count, PADDING_SPACE, specifier, len) < 0)
-		return (-1);
+	char_count = count_chars_s(str, specifier);
+	print_left_padding(char_count, PADDING_SPACE, specifier, len);
 	if (str == NULL && (specifier->precision < 0 || specifier->precision >= 6))
-	{
-		if (ft_write_count(1, "(null)", 6, len) < 0)
-			return (-1);
-	}
+		ft_write_count(1, "(null)", 6, len);
 	else if (char_count > 0)
-	{
-		if (ft_write_count(1, str, char_count, len) < 0)
-			return (-1);
-	}
-	return (print_right_padding(char_count, PADDING_SPACE, specifier, len));
+		ft_write_count(1, str, char_count, len);
+	print_right_padding(char_count, PADDING_SPACE, specifier, len);
 }

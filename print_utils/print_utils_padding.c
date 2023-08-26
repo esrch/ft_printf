@@ -12,36 +12,40 @@
 
 #include "../ft_printf.h"
 
-static ssize_t	print_padding(size_t char_count, t_padding padding,
+static void	print_padding(size_t char_count, t_padding padding,
 		t_specifier *specifier, int *len)
 {
 	if (specifier->min_width <= (int) char_count)
-		return (0);
+		return ;
 	if (padding == PADDING_ZERO)
-		return (print_zeros(specifier->min_width - char_count, len));
-	return (print_spaces(specifier->min_width - char_count, len));
+		print_zeros(specifier->min_width - char_count, len);
+	else
+		print_spaces(specifier->min_width - char_count, len);
 }
 
-ssize_t	print_left_padding(size_t char_count, t_padding padding,
+void	print_left_padding(size_t char_count, t_padding padding,
 		t_specifier *specifier, int *len)
 {
-	if (specifier->alignment != ALIGN_RIGHT)
-		return (0);
-	return (print_padding(char_count, padding, specifier, len));
+	if (*len < 0)
+		return ;
+	if (specifier->alignment == ALIGN_RIGHT)
+		print_padding(char_count, padding, specifier, len);
 }
 
-ssize_t	print_right_padding(size_t char_count, t_padding padding,
+void	print_right_padding(size_t char_count, t_padding padding,
 		t_specifier *specifier, int *len)
 {
-	if (specifier->alignment != ALIGN_LEFT)
-		return (0);
-	return (print_padding(char_count, padding, specifier, len));
+	if (*len < 0)
+		return ;
+	if (specifier->alignment == ALIGN_LEFT)
+		print_padding(char_count, padding, specifier, len);
 }
 
-ssize_t	print_precision_padding(size_t digit_count, t_specifier *specifier,
+void	print_precision_padding(size_t digit_count, t_specifier *specifier,
 		int *len)
 {
-	if (specifier->precision <= (ssize_t)digit_count)
-		return (0);
-	return (print_zeros((size_t)specifier->precision - digit_count, len));
+	if (*len < 0)
+		return ;
+	if (specifier->precision > (ssize_t)digit_count)
+		print_zeros((size_t)specifier->precision - digit_count, len);
 }

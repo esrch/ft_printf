@@ -27,27 +27,23 @@ static size_t	count_chars(unsigned long value, size_t digit_count,
 	return (char_count);
 }
 
-static ssize_t	print_prefixes(t_specifier *spec, int *len)
+static void	print_prefixes(t_specifier *spec, int *len)
 {
-	if (print_sign(1, spec->sign, len) < 0)
-		return (-1);
-	if (print_hex_prefix(spec->conversion == CONVERT_HEX_UPPER, len) < 0)
-		return (-1);
-	return (0);
+	print_sign(1, spec->sign, len);
+	print_hex_prefix(spec->conversion == CONVERT_HEX_UPPER, len);
 }
 
-static ssize_t	print_value(unsigned long value, size_t digit_count,
+static void	print_value(unsigned long value, size_t digit_count,
 	t_specifier *spec, int *len)
 {
-	if (value == 0 && ft_write_count(1, "(nil)", 5, len) < 0)
-		return (-1);
-	if (value != 0 && uprint_hex_digits(value, digit_count,
-			spec->conversion == CONVERT_HEX_UPPER, len) < 0)
-		return (-1);
-	return (0);
+	if (value == 0)
+		ft_write_count(1, "(nil)", 5, len);
+	else
+		uprint_hex_digits(value, digit_count,
+			spec->conversion == CONVERT_HEX_UPPER, len);
 }
 
-ssize_t	print_p(va_list args, t_specifier *spec, int *len)
+void	print_p(va_list args, t_specifier *spec, int *len)
 {
 	unsigned long	value;
 	size_t			digit_count;
@@ -57,20 +53,12 @@ ssize_t	print_p(va_list args, t_specifier *spec, int *len)
 	digit_count = ucount_digits(value, 16, spec->precision);
 	char_count = count_chars(value, digit_count, spec);
 	if (value != 0 && spec->padding == PADDING_ZERO)
-	{
-		if (print_prefixes(spec, len) < 0)
-			return (-1);
-	}
-	if (print_left_padding(char_count, spec->padding, spec, len) < 0)
-		return (-1);
+		print_prefixes(spec, len);
+	print_left_padding(char_count, spec->padding, spec, len);
 	if (value != 0 && spec->padding == PADDING_SPACE)
-	{
-		if (print_prefixes(spec, len) < 0)
-			return (-1);
-	}
-	if (value != 0 && print_precision_padding(digit_count, spec, len) < 0)
-		return (-1);
-	if (print_value(value, digit_count, spec, len) < 0)
-		return (-1);
-	return (print_right_padding(char_count, spec->padding, spec, len));
+		print_prefixes(spec, len);
+	if (value != 0)
+		print_precision_padding(digit_count, spec, len);
+	print_value(value, digit_count, spec, len);
+	print_right_padding(char_count, spec->padding, spec, len);
 }

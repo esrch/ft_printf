@@ -73,34 +73,34 @@ void				parse_specifier(char *format, va_list args,
 						t_specifier *specifier);
 
 // Print
-ssize_t				print_special(t_specifier *specifier, va_list args,
+void				print_special(t_specifier *specifier, va_list args,
 						int *len);
-ssize_t				print_c(va_list args, t_specifier *specifier, int *len);
-ssize_t				print_s(va_list args, t_specifier *specifier, int *len);
-ssize_t				print_d(va_list args, t_specifier *specifier, int *len);
-ssize_t				print_u(va_list args, t_specifier *specifier, int *len);
-ssize_t				print_x(va_list args, t_specifier *specifier, int *len);
-ssize_t				print_p(va_list args, t_specifier *specifier, int *len);
+void				print_c(va_list args, t_specifier *specifier, int *len);
+void				print_s(va_list args, t_specifier *specifier, int *len);
+void				print_d(va_list args, t_specifier *specifier, int *len);
+void				print_u(va_list args, t_specifier *specifier, int *len);
+void				print_x(va_list args, t_specifier *specifier, int *len);
+void				print_p(va_list args, t_specifier *specifier, int *len);
 
 // Print utils
-ssize_t				ft_write_count(int fd, void *buf, size_t nbyte, int *len);
-ssize_t				print_spaces(size_t n, int *len);
-ssize_t				print_zeros(size_t n, int *len);
-ssize_t				print_sign(int sign, t_sign sign_char, int *len);
-ssize_t				print_hex_prefix(int is_upper, int *len);
-ssize_t				print_left_padding(size_t char_count, t_padding padding,
+void				ft_write_count(int fd, void *buf, size_t nbyte, int *len);
+void				print_spaces(size_t n, int *len);
+void				print_zeros(size_t n, int *len);
+void				print_sign(int sign, t_sign sign_char, int *len);
+void				print_hex_prefix(int is_upper, int *len);
+void				print_left_padding(size_t char_count, t_padding padding,
 						t_specifier *specifier, int *len);
-ssize_t				print_right_padding(size_t char_count, t_padding padding,
+void				print_right_padding(size_t char_count, t_padding padding,
 						t_specifier *specifier, int *len);
-ssize_t				print_precision_padding(size_t digit_count,
+void				print_precision_padding(size_t digit_count,
 						t_specifier *specifier, int *len);
 size_t				count_digits(long long value, int base, int precision);
 size_t				ucount_digits(unsigned long long value, int base,
 						int precision);
-ssize_t				print_digits(long long value, size_t digit_count, int *len);
-ssize_t				uprint_digits(unsigned long long value, size_t digit_count,
+void				print_digits(long long value, size_t digit_count, int *len);
+void				uprint_digits(unsigned long long value, size_t digit_count,
 						int *len);
-ssize_t				uprint_hex_digits(unsigned long long value,
+void				uprint_hex_digits(unsigned long long value,
 						size_t digit_count, int is_upper, int *len);
 
 #endif

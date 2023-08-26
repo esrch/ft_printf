@@ -12,20 +12,24 @@
 
 #include "../ft_printf.h"
 
-ssize_t	print_sign(int sign, t_sign sign_char, int *len)
+void	print_sign(int sign, t_sign sign_char, int *len)
 {
+	if (*len < 0)
+		return ;
 	if (sign < 0)
-		return (ft_write_count(1, "-", 1, len));
-	if (sign >= 0 && sign_char == SIGN_PLUS)
-		return (ft_write_count(1, "+", 1, len));
-	if (sign >= 0 && sign_char == SIGN_SPACE)
-		return (ft_write_count(1, " ", 1, len));
-	return (0);
+		ft_write_count(1, "-", 1, len);
+	else if (sign >= 0 && sign_char == SIGN_PLUS)
+		ft_write_count(1, "+", 1, len);
+	else if (sign >= 0 && sign_char == SIGN_SPACE)
+		ft_write_count(1, " ", 1, len);
 }
 
-ssize_t	print_hex_prefix(int is_upper, int *len)
+void	print_hex_prefix(int is_upper, int *len)
 {
+	if (*len < 0)
+		return ;
 	if (is_upper)
-		return (ft_write_count(1, "0X", 2, len));
-	return (ft_write_count(1, "0x", 2, len));
+		ft_write_count(1, "0X", 2, len);
+	else
+		ft_write_count(1, "0x", 2, len);
 }
