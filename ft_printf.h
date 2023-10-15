@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erabbath <erabbath@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: erabbath <erabbath@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:51:02 by erabbath          #+#    #+#             */
-/*   Updated: 2023/07/12 07:35:44 by erabbath         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:28:52 by erabbath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "libft/libft.h"
 
 typedef enum e_conversion
 {
@@ -65,7 +66,6 @@ typedef struct s_specifier
 int					ft_printf(const char *format, ...);
 
 // Utils
-size_t				ft_strlen(char *str);
 size_t				ft_strlen_max(char *str, size_t max);
 
 // Parse
@@ -75,12 +75,13 @@ void				parse_specifier(char *format, va_list args,
 // Print
 void				print_special(t_specifier *specifier, va_list args,
 						int *len);
-void				print_c(va_list args, t_specifier *specifier, int *len);
-void				print_s(va_list args, t_specifier *specifier, int *len);
-void				print_d(va_list args, t_specifier *specifier, int *len);
-void				print_u(va_list args, t_specifier *specifier, int *len);
-void				print_x(va_list args, t_specifier *specifier, int *len);
-void				print_p(va_list args, t_specifier *specifier, int *len);
+void				print_c(unsigned char c, t_specifier *specifier, int *len);
+void				print_s(char *str, t_specifier *specifier, int *len);
+void				print_d(int value, t_specifier *specifier, int *len);
+void				print_u(unsigned int value, t_specifier *specifier,
+						int *len);
+void				print_x(unsigned int value, t_specifier *spec, int *len);
+void				print_p(unsigned long value, t_specifier *spec, int *len);
 
 // Print utils
 void				ft_write_count(int fd, void *buf, size_t nbyte, int *len);

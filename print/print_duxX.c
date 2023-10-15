@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_duxXp.c                                      :+:      :+:    :+:   */
+/*   print_duxX.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erabbath <erabbath@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: erabbath <erabbath@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:51:02 by erabbath          #+#    #+#             */
-/*   Updated: 2023/07/12 07:35:44 by erabbath         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:17:49 by erabbath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_printf.h"
 
-void	print_d(va_list args, t_specifier *specifier, int *len)
+void	print_d(int value, t_specifier *specifier, int *len)
 {
-	int		value;
 	size_t	digit_count;
 	size_t	char_count;
 
-	value = va_arg(args, int);
 	digit_count = count_digits(value, 10, specifier->precision);
 	char_count = digit_count;
 	if (specifier->precision > (ssize_t)digit_count)
@@ -35,13 +33,11 @@ void	print_d(va_list args, t_specifier *specifier, int *len)
 	print_right_padding(char_count, specifier->padding, specifier, len);
 }
 
-void	print_u(va_list args, t_specifier *specifier, int *len)
+void	print_u(unsigned int value, t_specifier *specifier, int *len)
 {
-	unsigned int	value;
 	size_t			digit_count;
 	size_t			char_count;
 
-	value = va_arg(args, unsigned int);
 	digit_count = ucount_digits(value, 10, specifier->precision);
 	char_count = digit_count;
 	if (specifier->precision > (ssize_t)digit_count)
@@ -52,13 +48,11 @@ void	print_u(va_list args, t_specifier *specifier, int *len)
 	print_right_padding(char_count, specifier->padding, specifier, len);
 }
 
-void	print_x(va_list args, t_specifier *spec, int *len)
+void	print_x(unsigned int value, t_specifier *spec, int *len)
 {
-	unsigned int	value;
 	size_t			digit_count;
 	size_t			char_count;
 
-	value = va_arg(args, unsigned int);
 	digit_count = ucount_digits(value, 16, spec->precision);
 	char_count = digit_count;
 	if (spec->precision > (ssize_t)digit_count)

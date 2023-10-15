@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_duxXp.c                                      :+:      :+:    :+:   */
+/*   print_p.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: erabbath <erabbath@42lausanne.ch>          +#+  +:+       +#+        */
+/*   By: erabbath <erabbath@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 08:51:02 by erabbath          #+#    #+#             */
-/*   Updated: 2023/07/12 07:35:44 by erabbath         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:18:55 by erabbath         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static size_t	count_chars(unsigned long value, size_t digit_count,
 	size_t	char_count;
 
 	if (value == 0)
-		return (5);
+		return (3);
 	char_count = digit_count + 2;
 	if (specifier->precision > (ssize_t)digit_count)
 		char_count = specifier->precision + 2;
@@ -36,29 +36,23 @@ static void	print_prefixes(t_specifier *spec, int *len)
 static void	print_value(unsigned long value, size_t digit_count,
 	t_specifier *spec, int *len)
 {
-	if (value == 0)
-		ft_write_count(1, "(nil)", 5, len);
-	else
-		uprint_hex_digits(value, digit_count,
-			spec->conversion == CONVERT_HEX_UPPER, len);
+	uprint_hex_digits(value, digit_count,
+		spec->conversion == CONVERT_HEX_UPPER, len);
 }
 
-void	print_p(va_list args, t_specifier *spec, int *len)
+void	print_p(unsigned long value, t_specifier *spec, int *len)
 {
-	unsigned long	value;
 	size_t			digit_count;
 	size_t			char_count;
 
-	value = va_arg(args, unsigned long);
 	digit_count = ucount_digits(value, 16, spec->precision);
 	char_count = count_chars(value, digit_count, spec);
-	if (value != 0 && spec->padding == PADDING_ZERO)
+	if (spec->padding == PADDING_ZERO)
 		print_prefixes(spec, len);
 	print_left_padding(char_count, spec->padding, spec, len);
-	if (value != 0 && spec->padding == PADDING_SPACE)
+	if (spec->padding == PADDING_SPACE)
 		print_prefixes(spec, len);
-	if (value != 0)
-		print_precision_padding(digit_count, spec, len);
+	print_precision_padding(digit_count, spec, len);
 	print_value(value, digit_count, spec, len);
 	print_right_padding(char_count, spec->padding, spec, len);
 }
